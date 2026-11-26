@@ -1,0 +1,9 @@
+# Netlify build settings (used in step 6).
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
