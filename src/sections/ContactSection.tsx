@@ -13,7 +13,10 @@ const SOCIALS = [
   { label: 'Fiverr', href: CONTACT.fiverr, Icon: SiFiverr },
 ];
 
-type Status = 'idle' | 'sending' | 'sent' | 'error' | 'local';
+type Status = 'idle' | 'sending' | 'sent' | 'error';
+
+// Web3Forms public access key (safe to keep in site code: it can only send messages TO the owner's inbox).
+const WEB3FORMS_KEY = '6a20cbe2-f4df-4799-ac4d-7e6ad998aaed';
 
 const inputCls =
   'w-full rounded-2xl border-2 border-[#D7E2EA]/25 bg-transparent px-5 py-4 text-[#D7E2EA] placeholder:text-[#D7E2EA]/40 outline-none transition-colors focus:border-[#D7E2EA] font-light';
@@ -24,23 +27,25 @@ export default function ContactSection() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const data = new FormData(form);
-    // Netlify Forms only works once the site is live on Netlify. On this computer, just show a note.
-    const host = window.location.hostname;
-    if (host === 'localhost' || host === '127.0.0.1') {
-      setStatus('local');
-      return;
-    }
+    const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
     setStatus('sending');
     try {
-      const body = new URLSearchParams();
-      data.forEach((v, k) => body.append(k, String(v)));
-      const res = await fetch('/', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString(),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          from_name: 'Gobi Portfolio',
+          subject: `Portfolio message from ${data.name}${data.subject ? ` · ${data.subject}` : ''}`,
+          name: data.name,
+          email: data.email,
+          topic: data.subject,
+          message: data.message,
+          botcheck: data.botcheck,
+        }),
       });
-      if (!res.ok) throw new Error(String(res.status));
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || !json.success) throw new Error(json.message || String(res.status));
       form.reset();
       setStatus('sent');
     } catch {
@@ -68,13 +73,9 @@ export default function ContactSection() {
 
       <div className="mx-auto mt-14 sm:mt-20 grid max-w-6xl gap-12 md:gap-16 md:grid-cols-[1.4fr_1fr]">
         <FadeIn delay={0.15}>
-          <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" onSubmit={onSubmit} className="flex flex-col gap-4">
-            <input type="hidden" name="form-name" value="contact" />
-            <p className="hidden">
-              <label>
-                Don’t fill this out: <input name="bot-field" />
-              </label>
-            </p>
+          <form onSubmit={onSubmit} className="flex flex-col gap-4">
+            {/* Hidden spam trap: real visitors never tick this. */}
+            <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
             <div className="grid gap-4 sm:grid-cols-2">
               <input className={inputCls} type="text" name="name" placeholder="Your name" required autoComplete="name" />
               <input className={inputCls} type="email" name="email" placeholder="Your email" required autoComplete="email" />
@@ -87,9 +88,7 @@ export default function ContactSection() {
               </GradientSubmit>
               <p className="text-sm font-light text-[#D7E2EA]" role="status" aria-live="polite">
                 {status === 'sent' && 'Thank you! Your message has been sent.'}
-                {status === 'error' && `Something went wrong. Please email ${CONTACT.email} directly.`}
-                {status === 'local' && 'Preview mode: the form starts sending emails once the site is live on Netlify.'}
-              </p>
+                {status === 'error' && `Something went wrong. Please email ${CONTACT.email} directly.`}              </p>
             </div>
           </form>
         </FadeIn>
