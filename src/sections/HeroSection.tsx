@@ -12,7 +12,9 @@ const NAV = [
 
 export default function HeroSection() {
   return (
-    <section className="relative flex h-screen flex-col" style={{ overflowX: 'clip' }}>
+    // Portrait screens (phones, upright tablets): content-height hero with the portrait in the normal flow (no gaps).
+    // Landscape screens (laptops, desktops): full-screen hero with the portrait pinned to the bottom, as in the design.
+    <section className="relative flex flex-col landscape:h-screen" style={{ overflowX: 'clip' }}>
       <FadeIn as="nav" delay={0} y={-20} className="flex justify-between px-6 md:px-10 pt-6 md:pt-8 relative z-20">
         {NAV.map((n) => (
           <a
@@ -37,7 +39,7 @@ export default function HeroSection() {
       </div>
 
       {/* Positioning lives on a plain div so the fade-in's transform doesn't cancel the centering. */}
-      <div className="absolute left-1/2 -translate-x-1/2 z-10 w-[300px] sm:w-[400px] md:w-[500px] lg:w-[640px] xl:w-[700px] top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0">
+      <div className="relative left-1/2 -translate-x-1/2 z-10 w-[104vw] max-w-[680px] -mt-[2vw] landscape:absolute landscape:mt-0 landscape:max-w-none landscape:bottom-0 landscape:w-[min(640px,80vh)] xl:landscape:w-[min(700px,85vh)]">
         <FadeIn delay={0.6} y={30}>
           <Magnet padding={150} strength={3} activeTransition="transform 0.3s ease-out" inactiveTransition="transform 0.6s ease-in-out">
             <img
@@ -55,7 +57,7 @@ export default function HeroSection() {
         </FadeIn>
       </div>
 
-      <div className="mt-auto flex items-end justify-between px-6 md:px-10 pb-7 sm:pb-8 md:pb-10 relative z-20">
+      <div className="-mt-[min(24vw,157px)] landscape:mt-auto flex items-end justify-between gap-4 px-6 md:px-10 pb-7 sm:pb-8 md:pb-10 relative z-20">
         <FadeIn
           as="p"
           delay={0.35}
