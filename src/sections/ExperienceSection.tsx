@@ -4,7 +4,7 @@ import { EXPERIENCE } from '../data';
 // Translation, transcription and script work (no images; text only, company names allowed).
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="bg-[#0C0C0C] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
+    <section id="experience" className="bg-[#0C0C0C] px-5 sm:px-8 md:px-10 pt-12 pb-20 sm:pt-16 sm:pb-24 md:py-32">
       <FadeIn
         as="h2"
         className="hero-heading text-center font-black uppercase leading-none tracking-tight mb-16 sm:mb-20 md:mb-28"

@@ -57,18 +57,19 @@ export default function HeroSection() {
         </FadeIn>
       </div>
 
-      {/* Narrow screens: headline and button stacked BELOW the portrait, never over it.
-          Wide screens: headline bottom-left, button bottom-right, both clear of the portrait (width set in index.css). */}
-      <div className="mt-1 flex flex-col items-start gap-5 wide:mt-auto wide:flex-row wide:items-end wide:justify-between wide:gap-4 px-6 md:px-10 pb-7 sm:pb-8 md:pb-10 relative z-20">
+      {/* Headline left, Contact Me right on every screen size (as on the laptop design).
+          Narrow screens: the row sits BELOW the portrait, never over it.
+          Wide screens: bottom-left / bottom-right, both clear of the portrait (headline width set in index.css). */}
+      <div className="mt-1 flex flex-row items-center justify-between gap-4 sm:gap-6 wide:mt-auto wide:items-end px-5 sm:px-6 md:px-10 pb-7 sm:pb-8 md:pb-10 relative z-20">
         <FadeIn
           as="p"
           delay={0.35}
           y={20}
-          className="hero-tagline font-light uppercase leading-snug tracking-wide text-[#D7E2EA]"
+          className="hero-tagline min-w-0 flex-1 wide:flex-none font-light uppercase leading-snug tracking-wide text-[#D7E2EA]"
         >
           {HERO_TAGLINE}
         </FadeIn>
-        <FadeIn delay={0.5} y={20}>
+        <FadeIn delay={0.5} y={20} className="shrink-0">
           <ContactButton />
         </FadeIn>
       </div>

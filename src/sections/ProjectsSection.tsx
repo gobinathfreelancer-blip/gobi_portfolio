@@ -86,7 +86,7 @@ export default function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="relative z-10 -mt-10 sm:-mt-12 md:-mt-14 bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-4 sm:px-8 md:px-10 pt-20 sm:pt-24 md:pt-32 pb-20"
+      className="relative z-10 -mt-10 sm:-mt-12 md:-mt-14 bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-4 sm:px-8 md:px-10 pt-20 sm:pt-24 md:pt-32 pb-10 md:pb-20"
     >
       <FadeIn
         as="h2"
@@ -97,13 +97,18 @@ export default function ProjectsSection() {
       </FadeIn>
 
       {/* Extra bottom space: the last card sits lower (stack offset), so it must not cover the button below. */}
-      <div ref={ref} className="mt-12 sm:mt-16" style={{ paddingBottom: `${(FEATURED.length - 1) * 28 + 40}px` }}>
+      {/* Extra space (--stack-extra) is smaller on phones, so there is no big empty gap under the last card. */}
+      <div
+        ref={ref}
+        className="mt-12 sm:mt-16 [--stack-extra:8px] md:[--stack-extra:40px]"
+        style={{ paddingBottom: `calc(${(FEATURED.length - 1) * 28}px + var(--stack-extra))` }}
+      >
         {FEATURED.map((p, i) => (
           <Card key={p.id} project={p} index={i} total={FEATURED.length} progress={scrollYProgress} onOpen={() => setOpen(p)} />
         ))}
       </div>
 
-      <FadeIn className="relative z-20 mt-16 sm:mt-20 flex flex-col items-center gap-4 text-center">
+      <FadeIn className="relative z-20 mt-8 md:mt-20 flex flex-col items-center gap-4 text-center">
         <p className="font-light uppercase tracking-widest text-[#D7E2EA]/70 text-sm sm:text-base">
           {PROJECTS.length} projects in total
         </p>

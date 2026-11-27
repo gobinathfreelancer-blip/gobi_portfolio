@@ -29,7 +29,7 @@ html {
 }
 
 /* Hero headline (tagline).
-   Narrow screens: sits under the portrait (up to 440px wide).
+   Narrow screens: under the portrait, left of the Contact Me button (takes the remaining width, up to 440px).
    Wide landscape screens (1200px+): bottom-left, never wider than the free space left of the centred portrait. */
 .hero-tagline {
   max-width: 440px;
