@@ -1,33 +1,43 @@
-import { Clapperboard, FileText, Languages, Mic } from 'lucide-react';
+import { Clapperboard, Headphones, Newspaper } from 'lucide-react';
 import FadeIn from '../components/FadeIn';
 import AnimatedText from '../components/AnimatedText';
-import GlassIcon, { GlassDefs } from '../components/GlassIcon';
+import GlassIcon, { GlassDefs, TranslateGlyphIcon } from '../components/GlassIcon';
 import { ContactButton } from '../components/Buttons';
-import { ABOUT_TEXT } from '../data';
+import StatsRow from '../components/StatsRow';
+import { ABOUT_STATS, ABOUT_TEXT } from '../data';
+
+// Layout
+// - Phones & tablets: the section is taller than the screen, so the corner icons get their own band
+//   (fixed distance from the top/bottom edge) and the content has matching top/bottom padding: icons never
+//   sit on the heading, the stats or the button.
+// - Wide screens (landscape 1200px+, the "wide:" variant): original design, icons placed by percentage beside
+//   the centred text column.
+const TOP_ICON = 'absolute top-8 sm:top-10 wide:top-[4%] w-[84px] sm:w-[110px] md:w-[136px] wide:w-[170px]';
+const BOTTOM_ICON = 'absolute bottom-8 sm:bottom-10 wide:bottom-[8%] w-[76px] sm:w-[100px] md:w-[124px] wide:w-[150px]';
 
 export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative flex min-h-screen flex-col items-center justify-center px-5 sm:px-8 md:px-10 py-20 overflow-hidden"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 sm:px-10 md:px-14 pt-[150px] pb-[150px] sm:pt-[190px] sm:pb-[180px] md:pt-[220px] md:pb-[200px] wide:px-10 wide:py-20"
     >
       <GlassDefs />
-      {/* Corner icons: translation, documents, scripts, transcription */}
-      <FadeIn delay={0.1} x={-80} y={0} duration={0.9} className="absolute top-[4%] left-[1%] sm:left-[2%] md:left-[4%] w-[90px] sm:w-[130px] md:w-[170px]">
-        <GlassIcon Icon={Languages} rotate={-10} />
+      {/* Corner icons, one per field: translation (Tamil + Chinese letters), transcription (headphones), DTP (newspaper), screenwriting (clapper) */}
+      <FadeIn delay={0.1} x={-80} y={0} duration={0.9} className={`${TOP_ICON} left-4 sm:left-8 md:left-12 wide:left-[4%]`}>
+        <GlassIcon Icon={TranslateGlyphIcon} rotate={-10} />
       </FadeIn>
-      <FadeIn delay={0.25} x={-80} y={0} duration={0.9} className="absolute bottom-[8%] left-[3%] sm:left-[6%] md:left-[10%] w-[80px] sm:w-[110px] md:w-[150px]">
-        <GlassIcon Icon={Mic} rotate={-12} />
+      <FadeIn delay={0.25} x={-80} y={0} duration={0.9} className={`${BOTTOM_ICON} left-6 sm:left-12 md:left-16 wide:left-[7%]`}>
+        <GlassIcon Icon={Headphones} rotate={-12} />
       </FadeIn>
-      <FadeIn delay={0.15} x={80} y={0} duration={0.9} className="absolute top-[4%] right-[1%] sm:right-[2%] md:right-[4%] w-[90px] sm:w-[130px] md:w-[170px]">
-        <GlassIcon Icon={FileText} rotate={12} />
+      <FadeIn delay={0.15} x={80} y={0} duration={0.9} className={`${TOP_ICON} right-4 sm:right-8 md:right-12 wide:right-[4%]`}>
+        <GlassIcon Icon={Newspaper} rotate={12} />
       </FadeIn>
-      <FadeIn delay={0.3} x={80} y={0} duration={0.9} className="absolute bottom-[8%] right-[3%] sm:right-[6%] md:right-[10%] w-[90px] sm:w-[120px] md:w-[160px]">
+      <FadeIn delay={0.3} x={80} y={0} duration={0.9} className={`${BOTTOM_ICON} right-6 sm:right-12 md:right-16 wide:right-[7%]`}>
         <GlassIcon Icon={Clapperboard} rotate={10} />
       </FadeIn>
 
-      <div className="relative z-10 flex flex-col items-center gap-16 sm:gap-20 md:gap-24">
-        <div className="flex flex-col items-center gap-10 sm:gap-14 md:gap-16">
+      <div className="relative z-10 flex w-full flex-col items-center gap-16 sm:gap-20 md:gap-24 wide:gap-20">
+        <div className="flex flex-col items-center gap-12 sm:gap-14 md:gap-16">
           <FadeIn
             as="h2"
             delay={0}
@@ -39,10 +49,11 @@ export default function AboutSection() {
           </FadeIn>
           <AnimatedText
             text={ABOUT_TEXT}
-            className="max-w-[560px] text-center font-medium leading-relaxed text-[#D7E2EA]"
+            className="max-w-[560px] text-center font-medium leading-[1.8] wide:leading-relaxed text-[#D7E2EA]"
             style={{ fontSize: 'clamp(1rem, 2vw, 1.35rem)' }}
           />
         </div>
+        <StatsRow stats={ABOUT_STATS} />
         <ContactButton />
       </div>
     </section>

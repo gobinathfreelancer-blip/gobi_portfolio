@@ -28,6 +28,26 @@ html {
   -webkit-text-fill-color: transparent;
 }
 
+/* Hero headline (tagline).
+   Narrow screens: sits under the portrait (up to 440px wide).
+   Wide landscape screens (1200px+): bottom-left, never wider than the free space left of the centred portrait. */
+.hero-tagline {
+  max-width: 440px;
+  font-size: clamp(0.8rem, 3.4vw, 1.05rem);
+}
+@media (orientation: landscape) and (min-width: 1200px) {
+  .hero-tagline {
+    font-size: clamp(0.75rem, 1.4vw, 1.5rem);
+    /* half the screen, minus half the portrait width (min(640px, 80vh)), minus page padding */
+    max-width: clamp(180px, calc(50vw - min(320px, 40vh) - 64px), 340px);
+  }
+}
+@media (orientation: landscape) and (min-width: 1280px) {
+  .hero-tagline {
+    max-width: clamp(180px, calc(50vw - min(350px, 42.5vh) - 64px), 340px);
+  }
+}
+
 /* Gentle float for the About-section icons */
 @keyframes float-y {
   0%,

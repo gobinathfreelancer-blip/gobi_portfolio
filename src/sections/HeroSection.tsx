@@ -12,9 +12,9 @@ const NAV = [
 
 export default function HeroSection() {
   return (
-    // Portrait screens (phones, upright tablets): content-height hero with the portrait in the normal flow (no gaps).
-    // Landscape screens (laptops, desktops): full-screen hero with the portrait pinned to the bottom, as in the design.
-    <section className="relative flex flex-col landscape:h-screen" style={{ overflowX: 'clip' }}>
+    // Narrow/portrait screens (phones, tablets, small windows): content-height hero, portrait in the normal flow, text below it.
+    // Wide landscape screens (1200px+ laptops, desktops): full-screen hero, portrait pinned to the bottom, as in the design.
+    <section className="relative flex flex-col wide:h-screen" style={{ overflowX: 'clip' }}>
       <FadeIn as="nav" delay={0} y={-20} className="flex justify-between px-6 md:px-10 pt-6 md:pt-8 relative z-20">
         {NAV.map((n) => (
           <a
@@ -39,7 +39,7 @@ export default function HeroSection() {
       </div>
 
       {/* Positioning lives on a plain div so the fade-in's transform doesn't cancel the centering. */}
-      <div className="relative left-1/2 -translate-x-1/2 z-10 w-[104vw] max-w-[680px] -mt-[2vw] landscape:absolute landscape:mt-0 landscape:max-w-none landscape:bottom-0 landscape:w-[min(640px,80vh)] xl:landscape:w-[min(700px,85vh)]">
+      <div className="relative left-1/2 -translate-x-1/2 z-10 w-[min(104vw,680px,80vh)] -mt-[2vw] wide:absolute wide:mt-0 wide:max-w-none wide:bottom-0 wide:w-[min(640px,80vh)] xl:wide:w-[min(700px,85vh)]">
         <FadeIn delay={0.6} y={30}>
           <Magnet padding={150} strength={3} activeTransition="transform 0.3s ease-out" inactiveTransition="transform 0.6s ease-in-out">
             <img
@@ -57,13 +57,14 @@ export default function HeroSection() {
         </FadeIn>
       </div>
 
-      <div className="-mt-[min(24vw,157px)] landscape:mt-auto flex items-end justify-between gap-4 px-6 md:px-10 pb-7 sm:pb-8 md:pb-10 relative z-20">
+      {/* Narrow screens: headline and button stacked BELOW the portrait, never over it.
+          Wide screens: headline bottom-left, button bottom-right, both clear of the portrait (width set in index.css). */}
+      <div className="mt-1 flex flex-col items-start gap-5 wide:mt-auto wide:flex-row wide:items-end wide:justify-between wide:gap-4 px-6 md:px-10 pb-7 sm:pb-8 md:pb-10 relative z-20">
         <FadeIn
           as="p"
           delay={0.35}
           y={20}
-          className="max-w-[180px] sm:max-w-[250px] md:max-w-[300px] lg:max-w-[340px] font-light uppercase leading-snug tracking-wide text-[#D7E2EA]"
-          style={{ fontSize: 'clamp(0.75rem, 1.4vw, 1.5rem)' }}
+          className="hero-tagline font-light uppercase leading-snug tracking-wide text-[#D7E2EA]"
         >
           {HERO_TAGLINE}
         </FadeIn>

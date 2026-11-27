@@ -8,7 +8,7 @@ const contactStyle = {
 };
 
 const contactClass =
-  'inline-block rounded-full px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base font-medium uppercase tracking-widest text-white transition-transform duration-200 hover:scale-[1.04] active:scale-[0.98]';
+  'inline-block whitespace-nowrap rounded-full px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base font-medium uppercase tracking-widest text-white transition-transform duration-200 hover:scale-[1.04] active:scale-[0.98]';
 
 // "Contact Me": scrolls to the Contact section (or goes to it from another page).
 export function ContactButton({ href = '#contact', label = 'Contact Me' }: { href?: string; label?: string }) {

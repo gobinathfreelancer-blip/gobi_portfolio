@@ -13,10 +13,19 @@ export const CONTACT = {
 };
 
 export const HERO_TAGLINE =
-  'I localize and design documents in 13+ languages, translate and transcribe Tamil, and format and write screenplays';
+  'I localize documents in 13+ languages, translate and transcribe Tamil, create multilingual layouts, and write screenplays';
 
 export const ABOUT_TEXT =
-  "I'm Gobi, a Tamil translator and multilingual DTP specialist. I localize menus, catalogs, guides and posters into more than ten languages, from Tamil and Malayalam to Chinese and Japanese, while keeping every layout pixel-perfect. I also transcribe Tamil audio, format screenplays and write scripts. Clients count on me for accuracy and on-time delivery, and teams count on me to learn fast. Let's build something great together!";
+  "I'm Gobinath, a multilingual DTP specialist, Tamil translator, transcription reviewer, and screenwriter. I work on document localization across 13+ languages, recreating layouts, formatting publications, and preparing professional print-ready documents. I also handle Tamil translation, audio transcription, subtitle localization, and screenplay writing. From complex document recreation to creative storytelling, I focus on accuracy, quality, and delivering work that meets each client's expectations.";
+
+
+// Numbers under the About text (all from real projects; they count up when they scroll into view).
+export const ABOUT_STATS = [
+  { value: 13, suffix: '+', label: 'Languages' },
+  { value: 870, suffix: '+', label: 'Custom flyers delivered' },
+  { value: 50000, suffix: '+', label: 'Words translated' },
+  { value: 400, suffix: '', label: 'Page catalog designed' },
+];
 
 export const SERVICES = [
   {
